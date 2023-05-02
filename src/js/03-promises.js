@@ -10,6 +10,10 @@ function onSubmit(e) {
   step = Number(step.value);
   amount = Number(amount.value);
   for (let i = 1; i <= amount; i++) {
+    if (delay < 0 || step < 0 || amount < 0) {
+      Notify.warning('Please, set the correct values');
+      return;
+    }
     let position = i;
     createPromise(position, delay)
       .then(({ position, delay }) => {
