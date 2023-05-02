@@ -24,7 +24,7 @@ const options = {
     chosenDate = selectedDates[0].getTime();
     currentDate = new Date().getTime();
     if (chosenDate <= currentDate) {
-        Notify.failure(alertMsg);
+      Notify.failure(alertMsg);
       return;
     }
     isDateChosen = true;
@@ -54,9 +54,17 @@ function timerStart() {
   if (!isDateChosen || chosenDate <= currentDate) {
     return;
   }
-  setInterval(() => {
+  refs.startBtn.setAttribute('disabled', true);
+  refs.inputEl.setAttribute('disabled', true);
+  const intervalId = setInterval(() => {
     currentDate = new Date().getTime();
     deltaTime = chosenDate - currentDate;
+    if (deltaTime <= 0) {
+      clearInterval(intervalId);
+      refs.inputEl.removeAttribute('disabled');
+      refs.startBtn.removeAttribute('disabled');
+      return;
+    }
     const { days, hours, minutes, seconds } = convertMs(deltaTime);
     refs.daysOutput.textContent = days;
     refs.hoursOutput.textContent = hours;

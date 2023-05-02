@@ -5,11 +5,14 @@ const refs = {
 };
 let timerId = null;
 let isPressed = false;
+refs.stopBtn.setAttribute('disabled', true);
 const onStartBtnClick = () => {
   if (isPressed) {
     return;
   }
   isPressed = true;
+  refs.startBtn.setAttribute('disabled', true);
+  refs.stopBtn.removeAttribute('disabled');
   timerId = setInterval(() => {
     refs.body.style.backgroundColor = getRandomHexColor();
   }, 1000);
@@ -17,6 +20,8 @@ const onStartBtnClick = () => {
 const onStopBtnClick = () => {
   clearInterval(timerId);
   isPressed = false;
+  refs.startBtn.removeAttribute('disabled');
+  refs.stopBtn.setAttribute('disabled', true);
 };
 
 function getRandomHexColor() {
